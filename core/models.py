@@ -282,8 +282,36 @@ class Audio(Content):
     descriptor = "Audio"
 
 
+class PollField(models.Field):
+    description = "Represents the questions and how many votes they have."
+
+        super(PollField, self).__init__(*args, **kwargs)
+
+        self._dict = {} # option: vote
+        self.total_votes = 0
+
+    def add_option(self, option: str):
+        self._dict[option] = 0
+
+    def vote(self, option: str):
+        self._dict[option] += 1
+        self.total_votes += 1
+
+    def __getitem__(self, option: str):
+        return self._dict[option]
+
+    def __iter__(self):
+        return iter(self._dict.items())
+
 class Poll(Content):
-    pass # STUB_POLL
+    """Poll subclass for the Content model."""
+    source = None # STUB_POLL
+
+    results = PollField()
+    question = models.TextField()
+
+    template = "home/content/poll.html"
+    descriptor = "Poll"
 
 
 class Story(Content):

@@ -1,1 +1,6 @@
-STUB_POLL
+{% with poll=content %}
+    <span> {{ poll.question }} </span>
+    {% for option, votes in poll.results %}
+        <span style="background-color:red; color: white; width: {{ votes / poll.results.total_votes * 50 }}px">{{ option }}</span>
+    {% endfor %}
+{% endwith %}
