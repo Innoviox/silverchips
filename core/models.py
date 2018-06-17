@@ -285,6 +285,7 @@ class Audio(Content):
 class PollField(models.Field):
     description = "Represents the questions and how many votes they have."
 
+    def __init__(self, *args, **kwargs):
         super(PollField, self).__init__(*args, **kwargs)
 
         self._dict = {} # option: vote

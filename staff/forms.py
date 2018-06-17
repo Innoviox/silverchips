@@ -93,9 +93,13 @@ class AudioForm(ContentForm):
 
 
 class PollForm(ContentForm):
-    pass
-    # STUB_POLL
-
+    """Form for poll creation."""
+    results = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
+    class Meta(ContentForm.Meta):
+        model = models.Poll
+        fields = ContentForm.Meta.fields + ['results', 'question']
+        widgets = dict(ContentForm.Meta.widgets,
+                       question=RichTextWidget(embed=True))
 
 class UserSearchForm(SearchMixin, forms.Form):
     """Form for searching through content."""

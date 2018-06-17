@@ -174,7 +174,9 @@ class AudioCreateView(ContentCreateView):
 
 class PollCreateView(ContentCreateView):
     """View for uploading a new poll."""
-    pass # STUB_POLL
+    model = models.Poll
+    form_class = forms.PollForm
+    editing = "Poll"
 
 
 class ContentEditView(ContentChangeMixin, UserCanMixin, EditorMixin, UpdateView):

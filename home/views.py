@@ -81,13 +81,15 @@ def view_profile(request, pk):
     images = models.Image.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
     videos = models.Video.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
     audios = models.Audio.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
+    polls = models.Poll.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
 
     return render(request, "home/profile.html", {
         "user": user,
         "stories": stories,
         "images": images,
         "videos": videos,
-        "audios": audios
+        "audios": audios,
+        "polls": polls
     })
 
 
