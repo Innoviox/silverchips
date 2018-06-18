@@ -123,7 +123,7 @@ def vote(request, pk, choice):
     print(pk, choice)
     poll = models.Poll.objects.get(pk=pk)
     print(poll)
-    print(poll.options, poll.question)
+    print(poll.options, poll.title)
     return render(request, "home/polls/vote.html", {'poll': poll})
 
 

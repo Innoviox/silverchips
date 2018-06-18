@@ -1,6 +1,6 @@
 {% load core %}
 {% with poll=content %}
-    <span> {{ poll.question }} </span>
+    <span> {{ poll.title }} </span>
     <p class="text-muted">{{ poll.description|safe }}</p>
     {% for option, votes, color in poll %}
         <span style="background: linear-gradient(to right, {{ color }} {{ votes|divide:poll.total_votes }}%, white {{ votes|divide:poll.total_votes }}%, white 100%); color: black; display: inline-block; width: 100%" >{{ option }}: {{ votes }}</span>
