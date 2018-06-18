@@ -1,6 +1,7 @@
 {% with poll=content %}
     <span> {{ poll.question }} </span>
-    {% for option, votes in poll.results %}
-        <span style="background-color:red; color: white; width: {{ votes / poll.results.total_votes * 50 }}px">{{ option }}</span>
+    <p class="text-muted">{{ poll.description|safe }}</p>
+    {% for option, votes in poll.options %}
+        <span style="background-color:red; color: white; width: {{ votes / poll.options.total_votes * 50 }}px">{{ option }}</span>
     {% endfor %}
 {% endwith %}
