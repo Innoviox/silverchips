@@ -312,7 +312,7 @@ class PollModelField(models.Field):
 class Poll(Content):
     """Poll subclass for the Content model."""
     options = PollModelField()
-    question = forms.CharField()
+    title = forms.CharField()
 
     template = "home/content/poll.html"
     descriptor = "Poll"
