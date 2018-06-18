@@ -288,7 +288,7 @@ class PollWidget(forms.MultiWidget):
 
     def decompress(self, value):
         if value:
-            return {v: 0 for v in value.split()}
+            return value.split('SENTINEL')
         return [None]
 
 class PollField(forms.MultiValueField):
@@ -298,16 +298,40 @@ class PollField(forms.MultiValueField):
         super(PollField, self).__init__(fields=[forms.CharField() for _ in range(5)], *args, **kwargs)
 
     def compress(self, data_list):
-        return ' '.join(data_list)
+        return 'SENTINEL'.join(data_list)
+
+class PollModelField(models.Field):
+    def formfield(self, **kwargs):
+        defaults = {'form_class': PollField}
+        defaults.update(kwargs)
+        return super(PollModelField, self).formfield(**defaults)
+
+    def get_internal_type(self):
+        return 'PollField'
 
 class Poll(Content):
     """Poll subclass for the Content model."""
-    options = PollField()
+    options = PollModelField()
 
     template = "home/content/poll.html"
     descriptor = "Poll"
     publishable = True
 
+    def __init__(self, *args, **kwargs):
+        super(Content, self).__init__(*args, **kwargs)
+        self.colors = ['red', 'blue', 'green', 'yellow', 'orange']
+        self.votes = [1, 2, 3, 4, 5]
+        self.total_votes = 15
+
+    # TODO: Implelment voting
+    def vote(self, item):
+        self.votes[item] += 1
+        self.total_votes += 1
+
+    def __iter__(self):
+        print("HEY")
+        print(self.options, self.votes, self.colors)
+        return iter(zip(self.options.split('SENTINEL'), self.votes, self.colors))
 
 class Story(Content):
     """The main story model.

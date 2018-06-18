@@ -17,3 +17,11 @@ for action in permissions.CONTENT_ACTIONS:
 def can(user, permission):
     """A filter that checks whether a user has a given permission in Django's permission scheme."""
     return user.has_perm(permission)
+
+
+@register.filter
+def divide(v1, v2):
+    try:
+        return round((int(v1) / int(v2)) * 100)
+    except (ValueError, ZeroDivisionError):
+        return None
