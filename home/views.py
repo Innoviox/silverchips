@@ -82,7 +82,8 @@ def view_profile(request, pk):
     videos = models.Video.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
     audios = models.Audio.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
     polls = models.Poll.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
-
+    for poll in polls:
+        print(poll.dict)
     return render(request, "home/profile.html", {
         "user": user,
         "stories": stories,

@@ -92,7 +92,7 @@ class AudioForm(ContentForm):
         fields = ContentForm.Meta.fields + ['source']
 
 class PollResults(forms.MultiWidget):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         _widgets = [forms.TextInput() for _ in range(5)]
         super(PollResults, self).__init__(_widgets, **kwargs)
 
@@ -102,7 +102,10 @@ class PollResults(forms.MultiWidget):
         return [None]
 
     def format_output(self, rendered_widgets):
-        return u''.join(rendered_widgets)
+        p = PollResults()
+        for w in rendered_widgets:
+            p.add_option(w)
+        return p
 
 
 class PollForm(ContentForm):
