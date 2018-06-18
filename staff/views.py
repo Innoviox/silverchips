@@ -213,7 +213,9 @@ class AudioEditView(ContentEditView):
 
 class PollEditView(ContentEditView):
     """View for editing polls."""
-    pass # STUB_POLL
+    model = models.Poll
+    form_class = forms.PollForm
+    editing = "Poll"
 
 
 def content_edit_view(request, pk):

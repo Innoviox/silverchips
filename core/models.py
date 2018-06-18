@@ -323,7 +323,7 @@ class Poll(Content):
         self.votes = [1, 2, 3, 4, 5]
         self.total_votes = 15
 
-    # TODO: Implelment voting
+    # TODO: Implement voting
     def vote(self, item):
         self.votes[item] += 1
         self.total_votes += 1
