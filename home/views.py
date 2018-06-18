@@ -82,8 +82,7 @@ def view_profile(request, pk):
     videos = models.Video.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
     audios = models.Audio.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
     polls = models.Poll.objects.filter(authors__in=[user], visibility=models.Content.PUBLISHED, embed_only=True)
-    for poll in polls:
-        print(poll.dict)
+
     return render(request, "home/profile.html", {
         "user": user,
         "stories": stories,
@@ -119,9 +118,13 @@ def staff(request):
 
 
 # Content interaction views
-def vote(request):
+def vote(request, pk, choice):
     """Vote in a poll."""
-    pass # STUB_POLL
+    print(pk, choice)
+    poll = models.Poll.objects.get(pk=pk)
+    print(poll)
+    print(poll.options, poll.question)
+    return render(request, "home/polls/vote.html", {'poll': poll})
 
 
 class CommentSubmitView(CreateView):

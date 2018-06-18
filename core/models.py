@@ -312,6 +312,7 @@ class PollModelField(models.Field):
 class Poll(Content):
     """Poll subclass for the Content model."""
     options = PollModelField()
+    question = forms.CharField()
 
     template = "home/content/poll.html"
     descriptor = "Poll"
@@ -323,14 +324,11 @@ class Poll(Content):
         self.votes = [1, 2, 3, 4, 5]
         self.total_votes = 15
 
-    # TODO: Implement voting
     def vote(self, item):
         self.votes[item] += 1
         self.total_votes += 1
 
     def __iter__(self):
-        print("HEY")
-        print(self.options, self.votes, self.colors)
         return iter(zip(self.options.split('SENTINEL'), self.votes, self.colors))
 
 class Story(Content):
