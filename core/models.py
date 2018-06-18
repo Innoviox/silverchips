@@ -1,6 +1,5 @@
 """Core models for the SilverChips platform."""
-import ast
-
+from django import forms
 from django.db import models
 import django.contrib.auth.models as auth
 from django.utils import timezone
@@ -283,51 +282,32 @@ class Audio(Content):
     descriptor = "Audio"
 
 
-class PollField(models.Field, dict):
-    description = "Represents the questions and how many votes they have."
+class PollWidget(forms.MultiWidget):
+    def __init__(self, *args, **kwargs):
+        super(PollWidget, self).__init__(widgets=[forms.TextInput() for _ in range(5)], *args, **kwargs)
+
+    def decompress(self, value):
+        if value:
+            return {v: 0 for v in value.split()}
+        return [None]
+
+class PollField(forms.MultiValueField):
+    widget = PollWidget
 
     def __init__(self, *args, **kwargs):
-        super(PollField, self).__init__(*args, **kwargs)
-        super(dict, self).__init__()
-        # self.dict = {}
-        # if args:
-        #     self.dict = {i: 0 for i in ast.literal_eval(args[0])} # option: vote
-        # self.total_votes = 0
-        print(args, kwargs)
-    #
-    # def add_option(self, option: str):
-    #     self.dict[option] = 0
-    #
-    # def vote(self, option: str):
-    #     self.dict[option] += 1
-    #     self.total_votes += 1
-    #
-    # def db_type(self, connection):
-    #     return 'Poll'
-    #
-    # def calc_width(self, votes):
-    #     return (votes // self.total_votes) * 50
-    #
-    # def __getitem__(self, option: str):
-    #     return self.dict[option]
-    #
-    # def __iter__(self):
-    #     return self.dict.values()
+        super(PollField, self).__init__(fields=[forms.CharField() for _ in range(5)], *args, **kwargs)
+
+    def compress(self, data_list):
+        return ' '.join(data_list)
 
 class Poll(Content):
     """Poll subclass for the Content model."""
-    options = PollField(default={})
+    options = PollField()
 
     template = "home/content/poll.html"
     descriptor = "Poll"
     publishable = True
 
-    def __init__(self, *args, **kwargs):
-    #     self.options = PollField(args[-1])
-    #     print(self.options.dict)
-        super(Poll, self).__init__(*args, **kwargs)
-    #     # self.options = PollField(args[-1])
-        print(self.options, type(self.options))
 
 class Story(Content):
     """The main story model.

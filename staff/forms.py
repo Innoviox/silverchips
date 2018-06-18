@@ -91,30 +91,14 @@ class AudioForm(ContentForm):
         model = models.Audio
         fields = ContentForm.Meta.fields + ['source']
 
-class PollResults(forms.MultiWidget):
-    def __init__(self, **kwargs):
-        _widgets = [forms.TextInput() for _ in range(5)]
-        super(PollResults, self).__init__(_widgets, **kwargs)
-
-    def decompress(self, value):
-        if value:
-            print(value)
-            return value.split(',')
-        return [None]
-
-    def format_output(self, rendered_widgets):
-        p = PollResults()
-        for w in rendered_widgets:
-            p.add_option(w)
-        return p
-
 
 class PollForm(ContentForm):
     """Form for poll creation."""
     class Meta(ContentForm.Meta):
         model = models.Poll
         fields = ContentForm.Meta.fields + ['options']
-        widgets = dict(ContentForm.Meta.widgets, options=PollResults)
+        widgets = dict(ContentForm.Meta.widgets, options=models.PollWidget())
+
 
 class UserSearchForm(SearchMixin, forms.Form):
     """Form for searching through content."""
