@@ -283,34 +283,36 @@ class Audio(Content):
     descriptor = "Audio"
 
 
-class PollField(models.Field):
+class PollField(models.Field, dict):
     description = "Represents the questions and how many votes they have."
 
     def __init__(self, *args, **kwargs):
         super(PollField, self).__init__(*args, **kwargs)
-        self.dict = {}
-        if args:
-            self.dict = {i: 0 for i in ast.literal_eval(args[0])} # option: vote
-        self.total_votes = 0
-
-    def add_option(self, option: str):
-        self.dict[option] = 0
-
-    def vote(self, option: str):
-        self.dict[option] += 1
-        self.total_votes += 1
-
-    def db_type(self, connection):
-        return 'Poll'
-
-    def calc_width(self, votes):
-        return (votes // self.total_votes) * 50
-
-    def __getitem__(self, option: str):
-        return self.dict[option]
-
-    def __iter__(self):
-        return self.dict.values()
+        super(dict, self).__init__()
+        # self.dict = {}
+        # if args:
+        #     self.dict = {i: 0 for i in ast.literal_eval(args[0])} # option: vote
+        # self.total_votes = 0
+        print(args, kwargs)
+    #
+    # def add_option(self, option: str):
+    #     self.dict[option] = 0
+    #
+    # def vote(self, option: str):
+    #     self.dict[option] += 1
+    #     self.total_votes += 1
+    #
+    # def db_type(self, connection):
+    #     return 'Poll'
+    #
+    # def calc_width(self, votes):
+    #     return (votes // self.total_votes) * 50
+    #
+    # def __getitem__(self, option: str):
+    #     return self.dict[option]
+    #
+    # def __iter__(self):
+    #     return self.dict.values()
 
 class Poll(Content):
     """Poll subclass for the Content model."""
@@ -321,10 +323,11 @@ class Poll(Content):
     publishable = True
 
     def __init__(self, *args, **kwargs):
-        self.options = PollField(args[-1])
-        print(self.options.dict)
+    #     self.options = PollField(args[-1])
+    #     print(self.options.dict)
         super(Poll, self).__init__(*args, **kwargs)
-        print(self.options)
+    #     # self.options = PollField(args[-1])
+        print(self.options, type(self.options))
 
 class Story(Content):
     """The main story model.

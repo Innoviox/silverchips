@@ -98,7 +98,8 @@ class PollResults(forms.MultiWidget):
 
     def decompress(self, value):
         if value:
-            return [value]
+            print(value)
+            return value.split(',')
         return [None]
 
     def format_output(self, rendered_widgets):
@@ -113,7 +114,7 @@ class PollForm(ContentForm):
     class Meta(ContentForm.Meta):
         model = models.Poll
         fields = ContentForm.Meta.fields + ['options']
-        widgets = dict(ContentForm.Meta.widgets, options=PollResults())
+        widgets = dict(ContentForm.Meta.widgets, options=PollResults)
 
 class UserSearchForm(SearchMixin, forms.Form):
     """Form for searching through content."""
