@@ -319,7 +319,7 @@ class Poll(Content):
 
     def __init__(self, *args, **kwargs):
         super(Content, self).__init__(*args, **kwargs)
-        self.colors = ['red', 'blue', 'green', 'yellow', 'orange']
+        self.colors = ['#6495ed', '#00ff7f', '#fa8072', '#ff69b4', '#ffff00']
         self.votes = [1, 2, 3, 4, 5]
         self.total_votes = 15
 
