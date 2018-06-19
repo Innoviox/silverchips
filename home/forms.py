@@ -4,6 +4,8 @@ from django import forms
 from django.forms import ModelChoiceField, RadioSelect
 from crispy_forms.helper import FormHelper
 
+from core.models import Poll
+
 
 class CommentForm(forms.ModelForm):
     """A short form to submit comments."""
@@ -11,21 +13,24 @@ class CommentForm(forms.ModelForm):
 
 class PollVoteForm(forms.ModelForm):
     """A form to vote on polls."""
-
-    def __init__(self, *args, poll, **kwargs):
+    def __init__(self, poll, *args, **kwargs):
         super(PollVoteForm, self).__init__(*args, **kwargs)
-        self.poll = poll
         self.helper = FormHelper()
+        self.helper.form_tag = False
+        self.helper.disable_csrf = True
 
-        self.fields['choice'] = ModelChoiceField(
+        self.widgets = {'options': ModelChoiceField(
             label='Options',
             queryset=poll.options.split("SENTINEL"),
             widget=RadioSelect,
             required=True,
             empty_label=None,
             initial=None,
-        )
+        )}
 
-    def make_choice(self, user):
-        choice = self.cleaned_data['choice']
-        self.poll.vote(user.person, choice)
+    class Meta:
+        model = Poll
+        fields = ['options']
+
+        def __init__(self, poll, *args, **kwargs):
+            super().__init__(*args, **kwargs)

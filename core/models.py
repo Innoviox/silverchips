@@ -328,6 +328,9 @@ class Poll(Content):
         self.votes[item] += 1
         self.total_votes += 1
 
+    def get(self, *args, **kwargs):
+        pass
+
     def __iter__(self):
         return iter(zip(self.options.split('SENTINEL'), self.votes, self.colors))
 

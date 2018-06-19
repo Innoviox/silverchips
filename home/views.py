@@ -12,6 +12,7 @@ from django.http import HttpResponseForbidden
 # News imports
 from core import models
 from core.permissions import user_can
+from home.forms import PollVoteForm
 
 
 def load_context(request):
@@ -120,11 +121,8 @@ def staff(request):
 # Content interaction views
 def vote(request, pk, choice):
     """Vote in a poll."""
-    print(pk, choice)
     poll = models.Poll.objects.get(pk=pk)
-    print(poll)
-    print(poll.options, poll.title)
-    return render(request, "home/polls/vote.html", {'poll': poll})
+    return render(request, "home/polls/vote.html", {'poll': poll, 'form': PollVoteForm(poll)})
 
 
 class CommentSubmitView(CreateView):

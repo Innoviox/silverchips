@@ -5,4 +5,15 @@
 
 {% block content %}
     <h2> {{ poll.title }}</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="get">
+                <div class="form-inline">
+                    {% crispy form form.helper %}
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-success">Search <i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
