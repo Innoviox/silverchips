@@ -122,7 +122,8 @@ def staff(request):
 def vote(request, pk, choice):
     """Vote in a poll."""
     poll = models.Poll.objects.get(pk=pk)
-    return render(request, "home/polls/vote.html", {'poll': poll, 'form': PollVoteForm(poll)})
+    form = PollVoteForm(poll)
+    return render(request, "home/polls/vote.html", {'poll': poll, 'form': form})
 
 
 class CommentSubmitView(CreateView):

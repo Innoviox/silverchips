@@ -1,18 +1,19 @@
 {% extends "home/base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Vote in a poll!{% endblock %}
+{% block title %}Vote in {{ poll.title }}!{% endblock %}
 
 {% block content %}
-    <h2> {{ poll.title }}</h2>
+    <h2> {{ poll.title }} </h2>
+    <h3> {{ poll.description }}</h3>
     <div class="card">
         <div class="card-body">
             <form method="get">
                 <div class="form-inline">
-                    {% crispy form form.helper %}
+                    {{ form.as_table }}
                 </div>
                 <br/>
-                <button type="submit" class="btn btn-success">Search <i class="fas fa-search"></i></button>
+                <button type="submit" class="btn btn-success">Vote!</button>
             </form>
         </div>
     </div>
