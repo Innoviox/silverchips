@@ -97,7 +97,7 @@ class PollForm(ContentForm):
     class Meta(ContentForm.Meta):
         model = models.Poll
         fields = ContentForm.Meta.fields + ['options', 'title']
-        widgets = dict(ContentForm.Meta.widgets, title=RichTextWidget(embed=True), options=models.PollWidget())
+        widgets = dict(ContentForm.Meta.widgets, options=models.PollWidget())
 
 
 class UserSearchForm(SearchMixin, forms.Form):

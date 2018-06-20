@@ -284,7 +284,7 @@ class Audio(Content):
 
 class PollWidget(forms.MultiWidget):
     def __init__(self, *args, **kwargs):
-        super(PollWidget, self).__init__(widgets=[forms.TextInput() for _ in range(5)], *args, **kwargs)
+        super(PollWidget, self).__init__(widgets=[forms.TextInput() for _ in range(5)], )
 
     def decompress(self, value):
         if value:
@@ -295,7 +295,8 @@ class PollField(forms.MultiValueField):
     widget = PollWidget
 
     def __init__(self, *args, **kwargs):
-        super(PollField, self).__init__(fields=[forms.CharField() for _ in range(5)], *args, **kwargs)
+        super(PollField, self).__init__(fields=[forms.CharField() for _ in range(5)],
+                                        require_all_fields=False)
 
     def compress(self, data_list):
         return 'SENTINEL'.join(data_list)
