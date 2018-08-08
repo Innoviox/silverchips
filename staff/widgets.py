@@ -1,5 +1,4 @@
 from django.forms.widgets import Widget
-from staff import forms
 
 
 class RichTextWidget(Widget):
@@ -17,4 +16,4 @@ class RichTextWidget(Widget):
         css = {
             'all': ("https://cdn.quilljs.com/1.3.4/quill.core.css", "https://cdn.quilljs.com/1.3.4/quill.snow.css")
         }
-        js = ("https://cdn.quilljs.com/1.3.4/quill.js", "staff/scripts/quill.js")
+        js = ("https://cdn.quilljs.com/1.3.4/quill.js", "staff/quill.js")

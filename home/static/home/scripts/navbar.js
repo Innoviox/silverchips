@@ -1,15 +1,5 @@
 function remargin() {
-    var outerHeight;
-    var scrolled = $(".navbar-wrapper").hasClass("scrolled");
-    if (scrolled) {
-        outerHeight = $(".navbar-wrapper").removeClass("scrolled").addClass("not-scrolled").outerHeight(true);
-        outerHeight += 48; //navbar bottom padding
-        $(".navbar-wrapper").removeClass("not-scrolled").addClass("scrolled");
-    } else {
-        outerHeight = $(".navbar-wrapper").outerHeight(true);
-    }
-
-    $("body").css("marginTop", outerHeight);
+    $("body").css("marginTop", $(".navbar-wrapper").outerHeight(true));
 }
 
 $(document).ready(function() {

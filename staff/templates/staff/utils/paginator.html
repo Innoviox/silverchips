@@ -1,9 +1,9 @@
 {% load staff %}
 
 {% if paginator.count == 0 %}
-<p>Sorry, there are no results!</p>
+<p>Sorry, your search returned no results!</p>
 {% else %}
-<p>We found {{ paginator.count }} result{{ paginator.count|pluralize }}.</p>
+<p>Your search returned {{ paginator.count }} results.</p>
 
 {% if is_paginated %}
 <nav aria-label="Pagination">
