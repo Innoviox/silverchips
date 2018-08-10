@@ -324,5 +324,6 @@ class GalleryEntryLink(OrderedModel):
 
 
 class Comment(models.Model):
+    # content = models.CharField(max_length=5, editable=False)
     name = models.CharField(max_length=32)
     text = models.CharField(max_length=400)

@@ -159,5 +159,11 @@ def vote(request):
 class CommentSubmitView(CreateView):
     """Create a comment."""
     model = models.Comment
-    form = forms.CommentForm
+    form_class = forms.CommentForm
     editing = "Comment"
+    template_name = "home/content/comment_create.html"
+    #
+    # def __init__(self, request, pk):
+    #     self.request = request
+    #     self.pk = pk
+    #     super().__init__()

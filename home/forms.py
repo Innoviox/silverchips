@@ -20,9 +20,16 @@ class TagSearchForm(forms.Form):
 
 class CommentForm(forms.Form):
     """A short form to submit comments."""
-    name = forms.CharField(label="Name:", required=True, max_length=32)
-    text = forms.CharField(label="Text:", required=True, max_length=400)
+    class Meta:
+        model = models.Comment
+        fields = ['name', 'text']
+        widgets = {'name': forms.widgets.TextInput(), 'text': RichTextWidget(embed=True)}
+
+    def __init__(self, *args, **kwargs):
+        kwargs.pop("instance")  # not sure why this has to happen
+        super().__init__(*args, **kwargs)
 
     helper = FormHelper()
+
     helper.form_tag = False
     helper.disable_csrf = True
