@@ -162,8 +162,11 @@ class CommentSubmitView(CreateView):
     form_class = forms.CommentForm
     editing = "Comment"
     template_name = "home/content/comment_create.html"
-    #
-    # def __init__(self, request, pk):
-    #     self.request = request
-    #     self.pk = pk
-    #     super().__init__()
+
+    def __init__(self, *args, **kwargs):
+        # self.request = request
+        # self.pk = pk
+        self.pk = kwargs.pop('pk')
+        self.request = args[0]
+        # print(args, kwargs)
+        super(HttpResponse, self).__init__()
